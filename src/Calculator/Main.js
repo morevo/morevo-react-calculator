@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-function Calculator(props, concatNums) {
+function Calculator(props, concatChars) {
   const [value, setValue] = useState("");
 
   function submitHandler(event) {
     event.preventDefault();
-    if (!Number(value)) {
-      setValue(value);  // In process...
-      props.concatNums(value);
+    if (value.trim()) {
+      setValue(value);
+      props.concatChars(value);
     }
   }
 
@@ -23,6 +23,7 @@ function Calculator(props, concatNums) {
         >
           <input
             value={value}
+            onChange={() => submitHandler}
             className="form__input"
             type="text"
             name="calculator"
@@ -32,9 +33,9 @@ function Calculator(props, concatNums) {
         </span>
         <div className="form__items">
           {props.ariphmetics.map((item, index) => (
-            <div className="calculator__button">
+            <div className="calculator__button" key={item.id}>
               <button
-                onClick={() => setValue(item.id)}
+                onClick={() => setValue(value + item.id)}
                 id={index + 1}
                 className="calculator__item"
                 type="submit"
